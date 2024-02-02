@@ -27,6 +27,7 @@ host=`hostname` # Current hostname
 sudo apt update && sudo apt upgrade -y
 sudo apt -y install realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir packagekit
 sudo apt -y install cifs-utils openssh-server
+sudo apt -y remove --autoremove gnome-initial-setup
 
 read -p "Enter a new computer name in the domain: " pcname
 read -p "Enter a domain name: " domain
