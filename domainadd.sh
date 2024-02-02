@@ -42,31 +42,21 @@ sudo cat << EOF > /etc/hosts
 127.0.0.1	$pcname.$domain
 EOF
 
-
-echo "Disable resolv"
 sudo systemctl disable systemd-resolved.service
 
-echo "Added dns=default"
 sudo sed -i '/main/a dns=default' /etc/NetworkManager/NetworkManager.conf
 
-echo "rm /etc/resolv.conf"
 sudo rm /etc/resolv.conf
-echo "restart NetworkManager"
+
 sudo service NetworkManager restart
 
-echo "cp krb5.conf"
 sudo cp /etc/krb5.conf /etc/krb5.conf.back
-
-echo "Clear krb5.conf"
 sudo echo " " > sudo /etc/krb5.conf
-echo "Added config in krb5.conf"
 sudo echo -e "[libdefaults]\n\tdefault_realm = $domain\n\tkdc_timesync = 1\n\tccache_type = 4\n\tforwardable = true\n\tproxiable = true\n\tfcc-mit-ticketflag = true\n[realms]\n\t$domain =\n\t{\n\t\tkdc = $pcname.$domain\n\t\tadmin_server = $pcname.$domain\n\t\tdefault_domain = $domain\n\t}\n[domain_realms]\n\t.$domain = $domain\n\t$domain = $domain" > /etc/krb5.conf
 
-# Check domain
 sudo realm discover $domain
 
-read - p "Add administrator on PC. Enter ADMIN username: " admin
-
+read -p "Add administrator on PC. Enter ADMIN username: " admin
 sudo realm join -U $admin $domain
 
 # Change config in mkhomedir
