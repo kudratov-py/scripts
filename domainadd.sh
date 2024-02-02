@@ -80,7 +80,7 @@ sudo realm join -U $admin $domain
 # Change config in mkhomedir
 sudo sed -i 's/Default: no/Default: yes/' /usr/share/pam-configs/mkhomedir && sudo sed -i 's/Priority: 0/Priority: 900/' /usr/share/pam-configs/mkhomedir && sudo sed -i 's/Session-Interactive-Only: yes/Session-Interactive-Only: no/' /usr/share/pam-configs/mkhomedir
 
-echo "Please choose - Create home directory on login"
+read -t 5 -p "Please choose - Create home directory on login"
 sudo pam-auth-update
 
 echo -e "\nEnter a domain username: "
