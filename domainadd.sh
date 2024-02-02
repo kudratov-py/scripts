@@ -52,8 +52,25 @@ sudo service NetworkManager restart
 sudo apt -y install krb5-user
 
 sudo cp /etc/krb5.conf /etc/krb5.conf.back
-sudo echo " " > sudo /etc/krb5.conf
-sudo echo -e "[libdefaults]\n\tdefault_realm = $domain\n\tkdc_timesync = 1\n\tccache_type = 4\n\tforwardable = true\n\tproxiable = true\n\tfcc-mit-ticketflag = true\n[realms]\n\t$domain =\n\t{\n\t\tkdc = $pcname.$domain\n\t\tadmin_server = $pcname.$domain\n\t\tdefault_domain = $domain\n\t}\n[domain_realms]\n\t.$domain = $domain\n\t$domain = $domain" > /etc/krb5.conf
+sudo cat << EOF > /etc/krb5.conf
+[libdefaults]
+        default_realm = $domain
+        kdc_timesync = 1
+        ccache_type = 4
+        forwardable = true
+        proxiable = true
+        fcc-mit-ticketflag = true
+[realms]
+        $domain =
+        {
+                kdc = $pcname.$domain
+                admin_server = $pcname.$domain
+                default_domain = $domain
+        }
+[domain_realms]
+        .$domain = $domain
+        $domain = $domain"
+EOF
 
 sudo realm discover $domain
 
