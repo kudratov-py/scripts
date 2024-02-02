@@ -26,7 +26,7 @@ host=`hostname` # Current hostname
 
 sudo apt update && sudo apt upgrade -y
 sudo apt -y install realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir packagekit
-sudo apt -y install cifs-utils openssh-server krb5-user
+sudo apt -y install cifs-utils openssh-server
 
 read -p "Enter a new computer name in the domain: " pcname
 read -p "Enter a domain name: " domain
@@ -49,6 +49,7 @@ sudo sed -i '/main/a dns=default' /etc/NetworkManager/NetworkManager.conf
 sudo rm /etc/resolv.conf
 
 sudo service NetworkManager restart
+sudo apt -y install krb5-user
 
 sudo cp /etc/krb5.conf /etc/krb5.conf.back
 sudo echo " " > sudo /etc/krb5.conf
