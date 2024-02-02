@@ -37,7 +37,7 @@ sudo hostnamectl set-hostname $pcname.$domain
 # Change /etc/hosts
 echo "Change /etc/hosts $pcname.$domain. Created backup /etc/hosts.back"
 sudo cp /etc/hosts /etc/hosts.back
-sudo cat << EOF > /etc/hosts
+sudo cat << EOF > sudo /etc/hosts
 127.0.0.1	localhost
 127.0.0.1	$pcname.$domain
 EOF
