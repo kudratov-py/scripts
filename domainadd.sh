@@ -104,12 +104,10 @@ fi
 
 # Файл отоборажения версии ОС в АД
 version=`lsb_release -r | awk {'print $2'}`
-sudo cat << EOF > sudo /etc/realmd.conf
-[active-directory]
-default-client = sssd
-os-name = Ubuntu Workstation
-os-version = $version
-EOF
+sudo touch /etc/realmd.conf
+sudo chmod 777 /etc/realmd.conf
+echo -e "[active-directory]\ndefault-client = sssd\nos-name = Ubuntu Workstation\nos-version = $version" > /etc/realmd.conf
+sudo chmod 644 /etc/realmd.conf
 
 echo -e $tcLtGRN; read -t 3 -p "Rebooting the system."; echo -e $tcLtGRN
 sudo reboot
