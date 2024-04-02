@@ -102,6 +102,14 @@ else
         sudo mv $HOME/domain_users /etc/sudoers.d/ && sudo chmod 0440 /etc/sudoers.d/domain_users
 fi
 
+# Файл отоборажения версии ОС в АД
+version=`lsb_release -r | awk {'print $2'}`
+sudo cat << EOF > sudo /etc/realmd.conf
+[active-directory]
+default-client = sssd
+os-name = Ubuntu Workstation
+os-version = $version
+EOF
+
 echo -e $tcLtGRN; read -t 3 -p "Rebooting the system."; echo -e $tcLtGRN
 sudo reboot
-
