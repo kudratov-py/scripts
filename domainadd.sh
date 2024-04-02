@@ -107,6 +107,8 @@ sudo touch /etc/realmd.conf
 sudo chmod 777 /etc/realmd.conf
 echo -e "[active-directory]\ndefault-client = sssd\nos-name = Ubuntu Workstation\nos-version = $version" > /etc/realmd.conf
 sudo chmod 644 /etc/realmd.conf
+sudo realm leave $domain
+sudo realm join --verbose --user=$admin $domain
 
 echo -e "$tcLtGRN"; read -t 3 -p "Rebooting the system."; echo -e "$tcLtGRN"
 sudo reboot
